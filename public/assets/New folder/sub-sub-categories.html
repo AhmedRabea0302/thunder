@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Meta Tags
+        ========================== -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        <!-- Site Title
+        ========================== -->
+        <title>New Dashboard</title>
+        
+        <!-- Favicon
+		===========================-->
+<!--		<link rel="shortcut icon" type="image/x-icon" href="images/fav.jpg">-->
+        
+        <!-- Web Fonts
+        ========================== -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet"> 
+        
+        <!-- Base & Vendors
+        ========================== -->
+        <link href="vendor/bootstrap/css/bootstrap-ar.css" rel="stylesheet">
+        <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Data table-->
+        <link href="vendor/data-table-plugin/datatables/datatables.min.css" rel="stylesheet">
+        <link href="vendor/data-table-plugin/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet">
+        <!--Dropzone-->
+        <link href="vendor/dropzone/dropzone.min.css" rel="stylesheet">
+        <link href="vendor/dropzone/basic.min.css" rel="stylesheet">
+        <!--DateRangPicker-->
+        <link href="vendor/daterangepicker/daterangepicker.css" rel="stylesheet">
+        <!--SummerNote Editor-->
+        <link href="vendor/bootstrap-summernote/summernote.css" rel="stylesheet">
+        
+        <!-- Site Style
+        ========================== -->
+        <link rel="stylesheet" href="css/style.css">        
+        
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header class="main-header">
+                <button class="btn btn-responsive-nav" >
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-search"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <form class="search-head-form">
+                                    <input type="text" class="form-control" placeholder="البحث">
+                                    <button class="btn-head">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </form><!--End search-head-form-->
+                            </ul>
+                        </li>
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                              <i class="fa fa-bell-o"></i>
+                              <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">لديك 10 إشعارات جديدة</li>
+                                <li>
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">5 أعضاء جدد انضموا اليوم</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">وصف طويل جدا هنا قد لا يصلح في الصفحة وقد يسبب مشاكل التصميم</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">انضم 5 أعضاء جدد</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">25 المبيعات المقدمة</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">لقد غيرت اسم المستخدم</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                              <li class="dropdown-footer"><a href="#">عرض الكل</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                              <img src="images/avatar.jpg" class="user-image" alt="User Image">
+                              <span>محمد عطا</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <!-- User image -->
+                                <li class="user-header">
+                                    <img src="images/avatar.jpg" class="img-circle" alt="User Image">
+                                    <p>
+                                        محمد عطا - مطور برمجيات
+                                      <small>عضو منذ أكتوبر 2016</small>
+                                    </p>
+                                </li><!--End User-header-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                      <a href="#" class="dropdown-btn">حسابى</a>
+                                    </div>
+                                    <div class="pull-right">
+                                      <a href="#" class="dropdown-btn">خروج</a>
+                                    </div>
+                                </li><!--End User-footer-->
+                            </ul><!--Enddropdown-menu-->
+                        </li><!--End user-menu-->
+                    </ul>
+                </div><!--End search-head--> 
+            </header><!--End main-Header-->
+            <aside class="main-sidebar">
+                <!-- Logo -->
+                <a href="index.html" class="logo">
+                  <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <img class="logo-mini" src="images/logo.png">
+                  <!-- logo for regular state and mobile devices -->
+                    <img class="logo-lg" src="images/logo.png">
+                </a>
+                <ul class="sidebar-links">
+                    <li class="">
+                        <a href="index.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>الرئيسية</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-newspaper-o"></i>
+                            <span>صفحات الموقع</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="slider-page.html">
+                                    <span>الإسلايد شو</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="static-data.html">
+                                    <span>البيانات الثابتة</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about-us.html">
+                                    <span>من نحن</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="solutions.html">
+                                    <span>حلولنا</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="customers.html">
+                                    <span>العملاء</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="partners.html">
+                                    <span>الشركاء</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="articles.html">
+                                    <span>المقالات</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="services.html">
+                                    <span>الخدمات</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="contact-us.html">
+                                    <span>تواصل معنا</span>
+                                </a>
+                            </li>
+                        </ul><!--End Level-one-tree-->
+                    </li>       
+                    <li class="treeview active">
+                        <a href="#">
+                            <i class="fa fa-list-ol"></i>
+                            <span>الفئات</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="main-categories.html">
+                                    <span>الفئات الرئيسية</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="sub-categories.html">
+                                    <span>الفئات الفرعية</span>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="sub-sub-categories.html">
+                                    <span>الفئات الجزء فرعية</span>
+                                </a>
+                            </li>
+                        </ul><!--End Level-one-tree-->
+                    </li>            
+                    <li>
+                        <a href="products.html">
+                            <i class="fa fa-cubes"></i>
+                            <span>المنتجات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html">
+                            <i class="fa fa-envelope-open"></i>
+                            <span>الطلبات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="messages.html">
+                            <i class="fa fa-comments"></i>
+                            <span>الرسائل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscription.html">
+                            <i class="fa fa-check-square-o"></i>
+                            <span>الإشتراكات</span>
+                        </a>
+                    </li>
+                    
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="site-settings.html">
+                                    <span>بيانات الموقع</span>
+                                </a>
+                            </li>
+                        </ul><!--End Level-one-tree-->
+                    </li>
+                </ul><!--End sidebar-->
+            </aside><!--End Main-aside-->
+            <div class="main">   
+                <div class="page-content">
+                    <section>
+                        <div class="box-item">
+                            <div class="box-item-head">
+                                <h3 class="title">صفحة الفئات الجزء فرعية</h3>
+                                <i class="fa fa-angle-down"></i>
+                            </div><!-- End Box-Item-Head -->
+                            <div class="box-item-content">
+                                <form class="form" id="" enctype="multipart/form-data" method="post">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group ar">
+                                                    <label>اسم الفئة</label>
+                                                    <input class="form-control" type="text">
+                                                </div><!--End Form-group-->
+                                            </div><!--End Col-md-6-->
+                                            <div class="col-md-6">
+                                                <div class="form-group en">
+                                                    <label>Category Name</label>
+                                                    <input class="form-control" type="text">
+                                                </div><!--End Form-group-->
+                                            </div><!--End Col-md-6-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>الفئة الفرعية</label>
+                                                    <select class="form-control" name="parent_id">
+                                                        <option value="">-- اختار الفئة الفرعية --</option>
+                                                        <optgroup label="mobiles | تليفونات ">
+                                                            <option value="11">infinix | انفنكس</option>
+                                                        </optgroup>
+                                                        <optgroup label="electronices | الكترونيات">
+                                                            <option value="12">deep freazer | مبردات</option>
+                                                            <option value="16">websites | مواقع الكترونيه</option>
+                                                            <option value="17">apps | تطبيقات</option>
+                                                            <option value="20">microwave | ميكرويف</option>
+                                                            <option value="23">head phones | سماعات</option>
+                                                        </optgroup>
+                                                        <optgroup label="accessories | اكسسورارات">
+                                                            <option value="9">beds | سرائر</option>
+                                                            <option value="10">chairs | كراسي</option>
+                                                            <option value="14">stones | احجار كريمه</option>
+                                                            <option value="18">cars | سيارات</option>
+                                                        </optgroup>
+                                                        <optgroup label="furniture | اثاث منزلي">
+                                                            <option value="8">rings | اقراط</option>
+                                                            <option value="13">toys | العاب</option>
+                                                            <option value="15">deskes | صحون</option>
+                                                            <option value="19">pets | حيوانات اليفه</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div><!--End Form-group-->
+                                            </div><!--End Col-md-6-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>التفعيل</label>
+                                                    <div class="tg-item">
+                                                        <input class="tgl tgl-light" id="cb1" type="checkbox"/>
+                                                        <label class="tgl-btn" for="cb1"></label>
+                                                    </div>
+                                                </div><!--End Form-group-->
+                                            </div><!--End Col-md-6-->
+                                        </div><!--End Row-->
+                                    </div><!--End Form-body-->
+                                    <div class="form-action">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button class="custom-btn" type="submit">حفظ التغييرات</button>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                    </div><!--End Form-action-->
+                                </form><!-- End row -->
+                            </div><!-- End Box-Item-Content -->
+                        </div><!-- End Box-Item -->
+                        <div class="box-item">
+                            <div class="box-item-head">
+                                <h3 class="title">كل الفئات الجزء فرعية</h3>
+                                <i class="fa fa-angle-down"></i>
+                            </div><!-- End Box-Item-Head -->
+                            <div class="box-item-content">
+                                <table class="table table-striped" id="sample_editable_1">
+                                    <thead>
+                                        <tr>
+                                            <th> # </th>
+                                            <th> اسم الفئة </th>
+                                            <th> حالة الفئة </th>
+                                            <th>الفئة الرئيسية</th>
+                                            <th> العمليات </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td> 1 </td>
+                                            <td>
+                                                deep freazer | مبردات
+                                            </td>
+                                            <td>
+                                                فعال
+                                            </td>
+                                            <td>
+                                                إكسسوارات
+                                            </td>
+                                            <td>
+                                                <!-- Single button -->
+                                                <div class="btn-group">
+                                                  <button type="button" class="custom-btn small dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    إعدادات <span class="caret"></span>
+                                                  </button>
+                                                  <ul class="dropdown-menu">
+                                                    <li><a href="#">تعديل</a></li>
+                                                    <li><a href="#">مسح</a></li>
+                                                  </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td> 1 </td>
+                                            <td>
+                                                infinix | انفنكس
+                                            </td>
+                                            <td>
+                                                فعال
+                                            </td>
+                                            <td>
+                                                أجهزة إلكترونية
+                                            </td>
+                                            <td>
+                                                <!-- Single button -->
+                                                <div class="btn-group">
+                                                  <button type="button" class="custom-btn small dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    إعدادات <span class="caret"></span>
+                                                  </button>
+                                                  <ul class="dropdown-menu">
+                                                    <li><a href="#">تعديل</a></li>
+                                                    <li><a href="#">مسح</a></li>
+                                                  </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td> 1 </td>
+                                            <td>
+                                                كاميرا ديجيتال
+                                            </td>
+                                            <td>
+                                                فعال
+                                            </td>
+                                            <td>
+                                                infinix | انفنكس
+                                            </td>
+                                            <td>
+                                                <!-- Single button -->
+                                                <div class="btn-group">
+                                                  <button type="button" class="custom-btn small dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    إعدادات <span class="caret"></span>
+                                                  </button>
+                                                  <ul class="dropdown-menu">
+                                                    <li><a href="#">تعديل</a></li>
+                                                    <li><a href="#">مسح</a></li>
+                                                  </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td> 1 </td>
+                                            <td>
+                                                كاميرا ديجيتال
+                                            </td>
+                                            <td>
+                                                فعال
+                                            </td>
+                                            <td>
+                                                deep freazer | مبردات
+                                            </td>
+                                            <td>
+                                                <!-- Single button -->
+                                                <div class="btn-group">
+                                                  <button type="button" class="custom-btn small dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    إعدادات <span class="caret"></span>
+                                                  </button>
+                                                  <ul class="dropdown-menu">
+                                                    <li><a href="#">تعديل</a></li>
+                                                    <li><a href="#">مسح</a></li>
+                                                  </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- End Box-Item-Content -->
+                        </div><!-- End Box-Item -->
+                    </section><!--End Section-->
+                </div><!--End page-content-->
+                <footer class="footer">
+                    <div class="pull-left">
+                        جميع الحقوق محفوظة لصالح  
+                        ©<a href="index.html">Upureka</a> 
+                    </div>
+                    <div class="pull-right">
+                        تصميم &amp; تطوير
+                        <a href="http://upureka.com" target="_blank">upureka</a>
+                    </div>
+                </footer><!--End footer-->
+            </div><!-- End Main -->
+        </div><!-- End Wrapper -->
+        
+        <!-- JS Base And Vendor
+        ========================== -->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.js"></script>
+        
+        <!-- Data table -->
+        <script src="vendor/data-table-plugin/datatable.js"></script>
+        <script src="vendor/data-table-plugin/datatables/datatables.min.js"></script>
+        <script src="vendor/data-table-plugin/datatables/plugins/bootstrap/datatables.bootstrap.js"></script>
+        <script src="vendor/data-table-plugin/script/table-datatables-editable.min.js"></script>
+        
+        <!-- Dropzone -->
+        <script src="vendor/dropzone/dropzone.min.js"></script>
+        <script src="vendor/dropzone/form-dropzone.js"></script>
+        
+        <!-- date-range-picker -->
+        <script src="vendor/daterangepicker/moment.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+        
+        <!-- date-range-picker -->
+        <script src="vendor/jquery-repeater/jquery.repeater.min.js"></script>
+        <script src="vendor/jquery-repeater/form-repeater.js"></script>
+        
+        <!--SummerNote Editor-->
+        <script src="vendor/bootstrap-summernote/summernote.min.js"></script>
+        
+        <!-- Site JS
+        ========================== -->
+        <script src="js/main.js"></script>
+        <script>
+            $("div#mydropzone").dropzone({ url: "/file/post" });
+        </script>
+    </body>
+</html>
