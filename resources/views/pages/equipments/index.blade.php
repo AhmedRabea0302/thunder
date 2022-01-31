@@ -83,7 +83,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="meesages">
-                            <div class="alert alert-success" style="display: none">تم إضافة المُنتج بنجاح!</div>
+                            <div class="alert alert-success" style="display: none">تم إضافة المُعدة بنجاح!</div>
                             <div class="alert alert-danger" style="display: none"><ul></ul></div>
                         </div>
                     </div>
