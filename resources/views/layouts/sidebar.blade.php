@@ -32,6 +32,14 @@
                 <span>شجرة المُنتج</span>
             </a>
         </li>
+
+        <li @if(Request::route()->getName() == 'all-paths' || Request::route()->getName() == 'get-add-path' || Request::route()->getName() == 'get-path-details') class="active" @endif>
+            <a href="{{route('all-paths')}}">
+                <i class="fa fa-road"></i>
+                <span>مسارات الإنتاج</span>
+            </a>
+        </li>
+
         <li class="treeview" @if(Request::route()->getName() == 'all-sectors') class="active" @endif>
             <a href="">
                 <i class="fa fa-gears"></i>

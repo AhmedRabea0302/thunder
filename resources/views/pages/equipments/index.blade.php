@@ -131,7 +131,7 @@
       </div><!-- /.modal -->
 
 
-      <!-- UPDATE Equipment MODAL -->
+    <!-- UPDATE Equipment MODAL -->
     <div id="updateEquipmentModal" class="modal fade" tabindex="-1" role="dialog">
 
         <div class="modal-dialog" role="document">

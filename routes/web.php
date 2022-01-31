@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductTreeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\PathController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +62,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/get-equipment', [EquipmentController::class, 'getEquipment'])->name('get-equipment');
     Route::post('/add-equipment', [EquipmentController::class, 'addEquipment'])->name('add-equipment');
     Route::post('/update-equipment', [EquipmentController::class, 'updateEquipment'])->name('update-equipment');
+
+    // PATHES ROUTES
+    Route::get('/all-paths', [PathController::class, 'index'])->name('all-paths');
+    Route::get('/add-path',[PathController::class, 'getAddPath'])->name('get-add-path');
+    Route::get('/get-path-details/{id}', [PathController::class, 'getPathDetails'])->name('get-path-details');
 
 });
