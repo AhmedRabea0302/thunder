@@ -16,39 +16,64 @@ function getRandomString(length) {
     return result;
 }
 
-// Add Equipment to path
+// Check if the path already Contains the equipment
+function checkIfThePathContainsSelectedEquipment(equipmentCode) {
+    const pathTableBody = Array.from(document.querySelectorAll('#pathTable tbody tr'));
+    let threshold;
+    debugger
+    if (pathTableBody.length > 0) {
+        threshold = pathTableBody.filter(row => {
+            return row.querySelector('.equipment_code').value == equipmentCode
+        }).length > 0;
+        debugger
+    } else {
+        threshold = false;
+    }
+    return threshold;
 
+}
+// Add Equipment to path
 const equipment_picker = document.getElementById('equipment_picker');
 const pathTable = document.getElementById('pathTable');
 const ptoductRowSlot = document.getElementById('rowproductsSlot');
 
 $('#equipment_picker').on('change', function(e) {
+    debugger
     let equipmentId = e.target.value;
-    let row = document.createElement('tr');
-    if (equipmentId) {
-        $.ajax({
-            url: config.routes.getEquipment,
-            type: 'GET',
-            data: {
-                id: equipmentId,
-                _token: config.token
-            }
-        }).
-        done((data) => {
-                console.log(data);
+    let equipmentCode = e.target.options[e.target.selectedIndex].innerText;
 
-                row.innerHTML = `
+    let containsEquipment = checkIfThePathContainsSelectedEquipment(equipmentCode);
+    if (!containsEquipment) {
+        let row = document.createElement('tr');
+        if (equipmentId && equipmentId != 'manually') {
+            $.ajax({
+                url: config.routes.getEquipment,
+                type: 'GET',
+                data: {
+                    id: equipmentId,
+                    _token: config.token
+                }
+            }).
+            done((data) => {
+                    console.log(data);
+
+                    row.innerHTML = `
                     <td style="display: none"><input type="hidden" name="equipment_id[]" class="equipment_id" value="${data.id}" /></td>
                     <td>
-                        <select class="form-control equipment_type" name="equipment_type[]">
-                            <option value="0">آلي</option>
-                            <option value="1">يدوي</option>
-                        </select>
+                        <input type="text" readonly name="types[]" class="form-control type" value="آلي" required />
                     </td>
-                    <td style="font-family: sans-serif" class="equipment_code">${data.equipment_code}</td>
-                    <td class="waste_per_hour">${data.waste_per_hour}</td>
-                    <td class="workers_number">${data.workers_number}</td>
-                    <td class="worker_hour_pay">${data.worker_hour_pay}</td>
+                    <td style="font-family: sans-serif">
+                        <input type="text" readonly name="equipment_codes[]" class="form-control equipment_code" value="${data.equipment_code}" required />
+                    </td>
+                    <td class="">
+                        <input type="number" readonly name="wastes_per_hour[]" class="form-control waste_per_hour" value="${data.waste_per_hour}" required />
+                    </td>
+                    <td class="">
+                        <input type="number" min="1" readonly name="workers_numbers[]" class="form-control workers_number" value="${data.workers_number}" required />
+                    </td>
+                    <td class="">
+                        <input type="number" readonly name="worker_hour_pays[]" class="form-control worker_hour_pay" value="${data.worker_hour_pay}" required />
+                    </td>
                     <td style="font-family: sans-serif">
                         <input type="number" min="0" name="production_time_rate[]" class="form-control production_time_rate" placeholder="مُعدل الإنتاج بالدقيقة" required />
                     </td>
@@ -60,21 +85,66 @@ $('#equipment_picker').on('change', function(e) {
                         <input readonly type="number" min="0" name="total_for_row[]" class="form-control total" placeholder="قيمة التشغيل/س" required />
                     </td>
                     <td>
-                        <i class="fa fa-trash-o btn btn-danger" style="cursor: pointer;"></i>
+                        <i class="fa fa-trash-o btn btn-danger delete-step" style="cursor: pointer;"></i>
                     </td>
                 `;
 
-                pathTable.querySelector('tbody').appendChild(row);
-                calculateTotalBudgetForThePath();
-            })
-            .fail(error => {});
+                    pathTable.querySelector('tbody').appendChild(row);
+                    calculateTotalBudgetForThePath();
 
+                    // Reset the selection box
+                    e.target.selectedIndex = 0;
+                })
+                .fail(error => {});
+
+        } else if (equipmentId == 'manually') {
+            let id = ((Math.random() * 13791) + 12).toFixed(0);
+            row.innerHTML = `
+                <td style="display: none"><input type="hidden" name="equipment_id[]" class="equipment_id" value="${id}" /></td>
+                <td>
+                    <input type="text" readonly name="types[]" class="form-control type" value="يدوي" required />
+                </td>
+                <td style="font-family: sans-serif">
+                    <input type="text" readonly name="equipment_codes[]" class="form-control equipment_code" value="-" required />
+                </td>
+                <td class="">
+                    <input type="text" readonly name="wastes_per_hour[]" class="form-control waste_per_hour" value="-" required />
+                </td>
+                <td class="">
+                    <input type="number" min="1" name="workers_numbers[]" class="form-control workers_number" value="1" required />
+                </td>
+                <td class="">
+                    <input type="number" min="1"name="worker_hour_pays[]" class="form-control worker_hour_pay" value="1" required />
+                </td>
+                <td style="font-family: sans-serif">
+                    <input type="number" min="0" name="production_time_rate[]" class="form-control production_time_rate" placeholder="مُعدل الإنتاج بالدقيقة" required />
+                </td>
+                <td style="font-family: sans-serif; display: flex; align-items: center">
+                    <input type="number" min="0" readonly name="expenses[]" class="form-control expenses" placeholder="(المصروفات)" required />
+                    <i class="fa fa-plus add-expenses" data-toggle="modal" data-target="#addExpensesModal"></i>
+                </td>
+                <td style="font-family: sans-serif">
+                    <input readonly type="number" min="0" name="total_for_row[]" class="form-control total" placeholder="قيمة التشغيل/س" required />
+                </td>
+                <td>
+                    <i class="fa fa-trash-o btn btn-danger delete-step" style="cursor: pointer;"></i>
+                </td>
+            `;
+
+            pathTable.querySelector('tbody').appendChild(row);
+            calculateTotalBudgetForThePath();
+
+            // Reset the selection box
+            e.target.selectedIndex = 0;
+        }
+    } else {
+        alert('تم إضفة هذة المعدة للمسار من قبل');
     }
 })
 
 // Calculate Total Budget For One Row
-function calculateTotalBudgetForOneRow(worker_pay, workers_number, equipment_waste, expenses) {
-    let total = (worker_pay * workers_number) + equipment_waste + expenses;
+function calculateTotalBudgetForOneRow(worker_pay, workers_number, equipment_waste, expenses) {;
+    let total = (worker_pay * workers_number) + (isNaN(equipment_waste) ? 0 : equipment_waste) + expenses;
     return total.toFixed(2);
 }
 
@@ -104,10 +174,9 @@ function calculateTotalBudgetForThePath(e) {
     }
     allPathRows.forEach((row) => {
 
-        let equipmentType = +row.querySelector('.equipment_type').value;
-        let wastePerHour = +row.querySelector('.waste_per_hour').innerText;
-        let workersNumber = +row.querySelector('.workers_number').innerText;
-        let worker_hour_pay = +row.querySelector('.worker_hour_pay').innerText;
+        let wastePerHour = +row.querySelector('.waste_per_hour').value;
+        let workersNumber = +row.querySelector('.workers_number').value;
+        let worker_hour_pay = +row.querySelector('.worker_hour_pay').value;
         let production_time_rate = +row.querySelector('.production_time_rate').value;
         let expenses = +row.querySelector('.expenses').value;
 
@@ -149,7 +218,10 @@ document.addEventListener('click', function(e) {
                 `;
                 modal.innerHTML += slot;
             }
-        })
+        });
+
+        // Hide Modal total expense
+        modalTotalExpenses.style.display = 'none';
 
     };
 });
@@ -290,24 +362,130 @@ function calculateTotalBudgetForExpenseModal() {
 }
 
 // Change State From Automatic To manuall
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('equipment_type')) {
+        let rowToChange = e.target.parentElement.parentElement;
+        let
 
+    }
+});
 
+// Delete Step From the table
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('delete-step')) {
+        const tableBody = document.querySelector('#pathTable tbody');
+        const rowToDelete = e.target.parentElement.parentElement;
+        const rowRequipmentId = +(e.target.parentElement.parentElement.querySelector('.equipment_id').value);
+        console.log(rowRequipmentId);
+        // Delete From UI
+        if (rowToDelete) {
+            tableBody.removeChild(rowToDelete);
+        }
 
-// productTreeTable.addEventListener('click', function(e) {
-//     if (e.target.classList.contains('fa-trash-o')) {
-//         let row = e.target.parentElement.parentElement;
-//         row.style.display = 'none';
-//         console.log(row);
-//         productTreeTable.querySelector('tbody').removeChild(row);
-//         setTimeout(function() {
-//             // Recalculate Budget on deleting
-//             calculateTotalBudgetForTheTree();
-//         }, 100)
-//     }
-// });
+        // Remove Expense from Expenses Array
+        if (expensesArray.length > 0) {
+            expensesArray = expensesArray.filter(r => {
+                return !(r.expenseId === rowRequipmentId)
+            });
+            console.log(expensesArray);
+        }
 
-// // on Total quantity Changes
+        // Recalculate Total Budget
+        calculateTotalBudgetForThePath();
+    }
+});
 
-// let requiredQuantityToGetDone = document.getElementById('quantity');
-// requiredQuantityToGetDone.addEventListener('change', calculateTotalBudgetForTheTree);
-// requiredQuantityToGetDone.addEventListener('keydown', calculateTotalBudgetForTheTree);
+// Add Path To database
+addPathForm = document.getElementById('addPathForm');
+
+addPathForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Calculate Total Budget Before Submitting
+    calculateTotalBudgetForThePath();
+
+    // Build the path Object
+    let pathObj = {};
+
+    let pathSector = +document.getElementById('sector_picker').value;
+    let productPicker = +document.getElementById('product_picker').value;
+    let pathCode = document.getElementById('path_code').value;
+    let pathType = +document.getElementById('path_type').value;
+    let quantity = +document.getElementById('quantity').value;
+    let totalBudget = +document.getElementById('totalBudgetField').value;
+
+    pathObj.pathSector = pathSector;
+    pathObj.productPicker = productPicker;
+    pathObj.pathCode = pathCode;
+    pathObj.pathType = pathType;
+    pathObj.quantity = quantity;
+    pathObj.totalBudget = totalBudget;
+
+    console.log(pathObj);
+
+    // Get All Path Rows
+    const allPathRows = pathTable.querySelectorAll('tbody tr');
+
+    // Build the one-step object
+    const allPathRowsData = [];
+    allPathRows.forEach(pathRow => {
+        let pathRowData = {};
+
+        let equipmentId = +pathRow.querySelector('.equipment_id').value;
+        let stepType = pathRow.querySelector('.type').value;
+        let workersNumber = +pathRow.querySelector('.workers_number').value;
+        let workerPay = +pathRow.querySelector('.worker_hour_pay').value;
+        let productionRate = +pathRow.querySelector('.production_time_rate').value;
+        let productionExpenses = +pathRow.querySelector('.expenses').value;
+        let stepTotalBudget = +pathRow.querySelector('.total').value;
+
+        pathRowData.equipmentId = equipmentId;
+        pathRowData.stepType = stepType;
+        pathRowData.workersNumber = workersNumber;
+        pathRowData.workerPay = workerPay;
+        pathRowData.productionRate = productionRate;
+        pathRowData.productionExpenses = productionExpenses;
+        pathRowData.stepTotalBudget = stepTotalBudget;
+
+        allPathRowsData.push(pathRowData)
+    });
+
+    console.log(allPathRowsData);
+
+    // Send Data to the server
+    sendPathData(pathObj, allPathRowsData, expensesArray);
+});
+
+function sendPathData(pathObj, allPathRowsData, expensesArray) {
+    if (validatePathFormFields()) {
+        $.ajax({
+                type: 'POST',
+                url: config.routes.addPath,
+                data: {
+                    pathData: pathObj,
+                    pathSteps: allPathRowsData,
+                    pathExpenses: expensesArray,
+                    _token: config.token
+                }
+            })
+            .done(response => {
+                console.log('SERVER RESPONSE', response);
+            })
+            .fail(error => {
+                console.log('SERVER ERROR: ', error);
+            });
+    }
+}
+
+// Validate Form Select Box fields
+function validatePathFormFields() {
+    debugger
+    const sectorPicker = document.getElementById('sector_picker');
+    const productPicker = document.getElementById('product_picker');
+    if (sectorPicker.value == 0 || productPicker.value == 0) {
+        alert('من فضلك تأكد من إختيار المُنتج والقسم');
+        return false;
+    } else {
+        return true;
+    }
+}

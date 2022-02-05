@@ -40,7 +40,7 @@
                 <h3 class="title">إضافة مسار</h3>
             </div><!-- End Box-Item-Head -->
             <div class="box-item-content">
-                <form action="{{ route('add-product-tree') }}" method="post">
+                <form action="{{ route('add-path') }}" method="post" id="addPathForm">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-4">
@@ -106,7 +106,8 @@
                     <h3>إختر المراحل/المُعدات</h3>
                     <div class="total-budget-shower" >
                         <select class="selectpicker" id="equipment_picker" data-show-subtext="true" data-live-search="true" style="font-family: 'sans-serif';">
-                            <option value="">إختر المعدة</option>
+                            <option value="">إختر المعدة/المرحلة</option>
+                            <option value="manually">يدوي</option>
                             @foreach ($equipments ?? '' as $equipment)
                                 <option value="{{$equipment->id}}" style="font-family: 'sans-serif';">{{$equipment->equipment_code}}</option>
                             @endforeach
@@ -192,7 +193,7 @@
         var config = {
             routes: {
                 getEquipment: "{{ url('/get-equipment') }}",
-                addProductTree: "{{ url('/add-product-tree') }}",
+                addPath: "{{ url('/add-path') }}",
             },
             token: "{{csrf_token()}}"
         };

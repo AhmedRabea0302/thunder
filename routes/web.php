@@ -68,4 +68,5 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/add-path',[PathController::class, 'getAddPath'])->name('get-add-path');
     Route::get('/get-path-details/{id}', [PathController::class, 'getPathDetails'])->name('get-path-details');
 
+    Route::post('/add-path',[PathController::class, 'addPath'])->name('add-path');
 });

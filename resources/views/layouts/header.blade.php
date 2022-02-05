@@ -48,13 +48,13 @@
             </li>
             <li class="dropdown user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <img src="{{asset('assets/images/avatar.jpg')}}" class="user-image" alt="User Image">
+                  <img src="{{asset('assets/images/avatar.png')}}" class="user-image" alt="User Image">
                   <span>أبوالفضل</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                     <li class="user-header">
-                        <img src="{{asset('assets/images/avatar.jpg')}}" class="img-circle" alt="User Image">
+                        <img src="{{asset('assets/images/avatar.png')}}" class="img-circle" alt="User Image">
                         <p>
                             أحمد أبوالفضل - مهندس برمجيات
                           <small>عضو منذ يناير 2022</small>
