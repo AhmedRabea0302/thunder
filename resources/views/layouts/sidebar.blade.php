@@ -40,6 +40,20 @@
             </a>
         </li>
 
+        <li @if(Request::route()->getName() == 'standard-cost') class="active" @endif>
+            <a href="{{ route('standard-cost') }}">
+                <i class="fa fa-dollar"></i>
+                <span>التكلفة المعيارية</span>
+            </a>
+        </li>
+
+        <li @if(Request::route()->getName() == 'daily-report') class="active" @endif>
+            <a href="{{ route('daily-report') }}">
+                <i class="fa fa-file"></i>
+                <span>التقرير اليومي</span>
+            </a>
+        </li>
+
         <li class="treeview" @if(Request::route()->getName() == 'all-sectors') class="active" @endif>
             <a href="">
                 <i class="fa fa-gears"></i>
@@ -56,14 +70,16 @@
                         <span>المُعدات</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('all-stocks')}}"  @if(Request::route()->getName() == 'all-stocks') class="active" @endif>
+                        <span>المخازن</span>
+                    </a>
+                </li>
             </ul><!--End Level-one-tree-->
         </li>
-        {{-- <li>
-            <a href="countries.html">
-                <i class="fa fa-map-marker"></i>
-                <span>الدول والمدن</span>
-            </a>
-        </li>
+
+        {{--
         <li>
             <a href="contact-us.html">
                 <i class="fa fa-envelope-open"></i>

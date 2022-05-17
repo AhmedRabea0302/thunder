@@ -35,7 +35,7 @@
                 <p>{{ Session()->get('message') }}</p>
             </div>
         @endif
-        <div class="box-item">
+        <div class="box-item" style="overflow: scroll">
             <div class="box-item-head">
                 <h3 class="title">إضافة شجرة مٌنتج</h3>
             </div><!-- End Box-Item-Head -->
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label for="">نوع شجرة المُنتج</label>
                                 <select id="product_tree_type" name="product_tree_type" class="form-control">
-                                    <option value="1">آخرى</option>
+                                    <option value="1" class="other-tree">آخرى</option>
                                     <option value="0" class="standard-tree">قياسي</option>
                                 </select>
                             </div>

@@ -35,6 +35,7 @@
         <!--SummerNote Editor-->
         <link href="{{asset('assets/vendor/bootstrap-summernote/summernote.css')}}" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.min.css')}}">
 
         <!-- Site Style
         ========================== -->
@@ -98,6 +99,7 @@
         <!-- Site JS
         ========================== -->
         <script src="{{asset('assets/js/main.js')}}"></script>
+        <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
         <script>
             $("div#mydropzone").dropzone({ url: "/file/post" });
         </script>

@@ -8,6 +8,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\PathController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\StandardCostController;
+use App\Http\Controllers\DailyReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +70,25 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/all-paths', [PathController::class, 'index'])->name('all-paths');
     Route::get('/add-path',[PathController::class, 'getAddPath'])->name('get-add-path');
     Route::get('/get-path-details/{id}', [PathController::class, 'getPathDetails'])->name('get-path-details');
+    Route::get('/get-path-expenses/{id}', [PathController::class, 'getPathExpenses'])->name('get-path-expenses');
+    Route::get('/check-standard-path-for-the-product', [PathController::class, 'checkProductStandardPath'])->name('check-product-standard-path');
 
     Route::post('/add-path',[PathController::class, 'addPath'])->name('add-path');
+    Route::post('/update-path',[PathController::class, 'updatePath'])->name('update-path');
+
+    // STOCKS ROUTES
+    Route::get('/all-stocks', [StockController::class, 'index'])->name('all-stocks');
+    Route::post('/add-stock', [StockController::class, 'addStock'])->name('add-Stock');
+    Route::post('/update-stock', [StockController::class, 'updateStock'])->name('update-Stock');
+    Route::get('/delete-stock', [StockController::class, 'deleteStock'])->name('delete-Stock');
+
+    // PRICES ROUTES
+    Route::get('/standard-cost', [StandardCostController::class, 'index'])->name('standard-cost');
+    Route::post('/get-product-paths-and-trees', [StandardCostController::class, 'getProductPathsAndTrees']);
+
+    // DAILY REPORT
+    Route::get('/daily-report', [DailyReportController::class, 'index'])->name('daily-report');
+    Route::get('/get-product-daily-report', [DailyReportController::class, 'getProduct'])->name('daily-report-get-product');
+    Route::post('/add-daily-report', [DailyReportController::class, 'addDailyReport'])->name('add-daily-report');
+
 });

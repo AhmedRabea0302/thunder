@@ -24,11 +24,12 @@ class ProductTreeController extends Controller
 
     public function getProduct(Request $request) {
         $product = Product::find($request->id);
-
         $productHasStandardTree = $this->checkIfProductHasStandardProductTree($product->getProductTrees);
-        // dd($productHasStandardTree);
         if($product) {
-            return response()->json(['product' => $product, 'productHasStTree' => $productHasStandardTree]);
+            return response()->json([
+                'product' => $product,
+                'productHasStTree' => $productHasStandardTree,
+            ]);
         }
     }
 
@@ -97,7 +98,8 @@ class ProductTreeController extends Controller
 
             $product_tree->update([
                 'quantity' => $request->quantity,
-                'total_budget' => $request->total_budget
+                'total_budget' => $request->total_budget,
+                'product_tree_type' => $request->product_tree_type
             ]);
 
             // Create Tree Products
@@ -152,4 +154,5 @@ class ProductTreeController extends Controller
         return $threshold;
 
     }
+
 }

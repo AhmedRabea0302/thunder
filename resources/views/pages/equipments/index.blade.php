@@ -179,7 +179,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">إهلاك المُعدة بالساعة</label>
-                            <input type="number" min="1" name="equipment_waste_update" class="form-control" style="font-family: 'sans-serif'">
+                            <input type="number" min="0" name="equipment_waste_update" class="form-control" style="font-family: 'sans-serif'">
                         </div>
                     </div>
 

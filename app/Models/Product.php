@@ -14,4 +14,8 @@ class Product extends Model
         return $this->hasMany(ProductTree::class, 'product_id', 'id');
     }
 
+    public function getProductPaths() {
+        return $this->hasMany(Path::class, 'product_id', 'id');
+    }
+
 }

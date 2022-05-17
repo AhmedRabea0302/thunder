@@ -16,6 +16,37 @@ function getRandomString(length) {
     return result;
 }
 
+// Get Product on product picker change
+$('#product_picker').on('change', function(e) {
+    let product_id = e.target.value;
+    if (product_id != '') {
+        $.ajax({
+            url: config.routes.checkProductPaths,
+            type: 'GET',
+            data: {
+                id: product_id,
+                _token: config.token
+            }
+        }).
+        done((data) => {
+                // Disable The Standard Option if the there is a standard path for the product
+                if (data == true) {
+                    document.querySelector('.standard-path').disabled = true;
+                    document.querySelector('.standard-path').innerText = 'تم إضافة مسار قياسي من قبل';
+                    document.querySelector('.other-path').disabled = false;
+                    document.querySelector('.other-path').innerText = 'آخرى';
+
+                } else {
+                    document.querySelector('.standard-path').disabled = false;
+                    document.querySelector('.standard-path').innerText = 'قياسي';
+                    document.querySelector('.other-path').disabled = true;
+                    document.querySelector('.other-path').innerText = 'يجب إضافة مسار قياسي لهذا المُنتج أولاً';
+                }
+            })
+            .fail(error => {});
+    }
+})
+
 // Check if the path already Contains the equipment
 function checkIfThePathContainsSelectedEquipment(equipmentCode) {
     const pathTableBody = Array.from(document.querySelectorAll('#pathTable tbody tr'));
@@ -45,7 +76,7 @@ $('#equipment_picker').on('change', function(e) {
     let containsEquipment = checkIfThePathContainsSelectedEquipment(equipmentCode);
     if (!containsEquipment) {
         let row = document.createElement('tr');
-        if (equipmentId && equipmentId != 'manually') {
+        if (equipmentId && equipmentId != 'يدوي') {
             $.ajax({
                 url: config.routes.getEquipment,
                 type: 'GET',
@@ -97,7 +128,7 @@ $('#equipment_picker').on('change', function(e) {
                 })
                 .fail(error => {});
 
-        } else if (equipmentId == 'manually') {
+        } else if (equipmentId == 'يدوي') {
             let id = ((Math.random() * 13791) + 12).toFixed(0);
             row.innerHTML = `
                 <td style="display: none"><input type="hidden" name="equipment_id[]" class="equipment_id" value="${id}" /></td>
@@ -143,9 +174,9 @@ $('#equipment_picker').on('change', function(e) {
 })
 
 // Calculate Total Budget For One Row
-function calculateTotalBudgetForOneRow(worker_pay, workers_number, equipment_waste, expenses) {;
-    let total = (worker_pay * workers_number) + (isNaN(equipment_waste) ? 0 : equipment_waste) + expenses;
-    return total.toFixed(2);
+function calculateTotalBudgetForOneRow(worker_pay, workers_number, equipment_waste, expenses, production_time_rate) {
+    let total = ((worker_pay * workers_number) + (isNaN(equipment_waste) ? 0 : equipment_waste) + expenses) * (production_time_rate / 60);
+    return total.toFixed(3);
 }
 
 // Select All Product Tree Rows And Calculate Total Budget
@@ -181,13 +212,18 @@ function calculateTotalBudgetForThePath(e) {
         let expenses = +row.querySelector('.expenses').value;
 
         let totalForRow = row.querySelector('.total');
-        totalForRow.value = calculateTotalBudgetForOneRow(worker_hour_pay, workersNumber, wastePerHour, expenses);
+        totalForRow.value = calculateTotalBudgetForOneRow(worker_hour_pay, workersNumber, wastePerHour, expenses, production_time_rate);
 
         totalBudget += +totalForRow.value;
     })
 
     totalBudget = +(totalBudget / requiredQuantityToGetDone);
-    totalBudgetField.value = totalBudget.toFixed(2);
+    totalBudgetField.value = totalBudget.toFixed(3);
+
+    Toast.fire({
+        icon: 'success',
+        title: 'تم حساب التكلفة بنجاح!'
+    })
 
 }
 
@@ -361,15 +397,6 @@ function calculateTotalBudgetForExpenseModal() {
     console.log(totalBudget);
 }
 
-// Change State From Automatic To manuall
-document.addEventListener('change', function(e) {
-    if (e.target.classList.contains('equipment_type')) {
-        let rowToChange = e.target.parentElement.parentElement;
-        let
-
-    }
-});
-
 // Delete Step From the table
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('delete-step')) {
@@ -436,7 +463,6 @@ addPathForm.addEventListener('submit', function(e) {
         let workersNumber = +pathRow.querySelector('.workers_number').value;
         let workerPay = +pathRow.querySelector('.worker_hour_pay').value;
         let productionRate = +pathRow.querySelector('.production_time_rate').value;
-        let productionExpenses = +pathRow.querySelector('.expenses').value;
         let stepTotalBudget = +pathRow.querySelector('.total').value;
 
         pathRowData.equipmentId = equipmentId;
@@ -444,7 +470,6 @@ addPathForm.addEventListener('submit', function(e) {
         pathRowData.workersNumber = workersNumber;
         pathRowData.workerPay = workerPay;
         pathRowData.productionRate = productionRate;
-        pathRowData.productionExpenses = productionExpenses;
         pathRowData.stepTotalBudget = stepTotalBudget;
 
         allPathRowsData.push(pathRowData)
@@ -469,6 +494,9 @@ function sendPathData(pathObj, allPathRowsData, expensesArray) {
                 }
             })
             .done(response => {
+                if (response.code == 200) {
+                    window.location.href = '/all-paths';
+                }
                 console.log('SERVER RESPONSE', response);
             })
             .fail(error => {
@@ -479,7 +507,7 @@ function sendPathData(pathObj, allPathRowsData, expensesArray) {
 
 // Validate Form Select Box fields
 function validatePathFormFields() {
-    debugger
+
     const sectorPicker = document.getElementById('sector_picker');
     const productPicker = document.getElementById('product_picker');
     if (sectorPicker.value == 0 || productPicker.value == 0) {
@@ -489,3 +517,15 @@ function validatePathFormFields() {
         return true;
     }
 }
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})

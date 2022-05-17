@@ -1,6 +1,6 @@
 const addProductDialogButton = document.querySelector('.add-product');
 const postAddProductButton = document.getElementById('post-product');
-const product_code = document.querySelector('input[name="product_code"]');
+const product_code = document.querySelector('.product_code_modal');
 
 const successMessage = document.querySelector('.meesages .alert-success');
 const errorMessagesul = document.querySelector('.meesages .alert-danger ul');
@@ -9,7 +9,7 @@ const errorMessagesul = document.querySelector('.meesages .alert-danger ul');
 // Set the product Code
 addProductDialogButton.addEventListener('click', function() {
     product_code.value = getRandomString(11);
-    console.log(product_code.innerText);
+    console.log(product_code.value);
 });
 
 // Generate Product Code
@@ -19,6 +19,7 @@ function getRandomString(length) {
     for (var i = 0; i < length; i++) {
         result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
     }
+
     return result;
 }
 

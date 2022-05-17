@@ -92,7 +92,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="">كود المُنتج</label>
-                        <input type="text" disabled name="product_code" class="form-control" style="font-family: 'sans-serif'">
+                        <input type="text" readonly name="product_code" class="form-control product_code_modal" style="font-family: 'sans-serif'">
                     </div>
                   </div>
 
@@ -103,6 +103,9 @@
                             <option value="تام">تام</option>
                             <option value="نصف مُصنع">نصف مُصنع</option>
                             <option value="خامات">خامات</option>
+                            <option value="تعبئة و تغليف">تعبئة و تغليف</option>
+                            <option value="إعادة تشغيل">إعادة تشغيل</option>
+                            <option value="تالف">تالف</option>
                         </select>
                     </div>
                   </div>
@@ -150,7 +153,7 @@
             <div class="modal-body">
 
               <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="meesages">
                         <div class="alert update alert-success" style="display: none">تم تعديل المُنتج بنجاح!</div>
                         <div class="alert update alert-danger" style="display: none"><ul></ul></div>
@@ -169,7 +172,9 @@
                         <select name="product_type" id="product_type" class="form-control product_type_update">
                             <option value="تام">تام</option>
                             <option value="نصف مُصنع">نصف مُصنع</option>
-                            <option value="خامات">خامات</option>
+                            <option value="تعبئة و تغليف">تعبئة و تغليف</option>
+                            <option value="إعادة تشغيل">إعادة تشغيل</option>
+                            <option value="تالف">تالف</option>
                         </select>
                     </div>
                   </div>

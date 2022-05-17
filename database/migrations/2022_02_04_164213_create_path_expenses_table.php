@@ -15,6 +15,13 @@ class CreatePathExpensesTable extends Migration
     {
         Schema::create('path_expenses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('path_id');
+            $table->unsignedBigInteger('equipment_id');
+            $table->string('expense_type');
+            $table->float('expense_value');
+
+            $table->foreign('path_id')->references('id')->on('paths')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

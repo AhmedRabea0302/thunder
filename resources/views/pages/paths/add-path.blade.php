@@ -84,8 +84,8 @@
                             <div class="form-group">
                                 <label for="">نوع المسار</label>
                                 <select id="path_type" name="path_type" class="form-control">
-                                    <option value="1">آخرى</option>
-                                    <option value="0" class="standard-tree">قياسي</option>
+                                    <option value="1" class="other-path">آخرى</option>
+                                    <option value="0" class="standard-path">قياسي</option>
                                 </select>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                     <div class="total-budget-shower" >
                         <select class="selectpicker" id="equipment_picker" data-show-subtext="true" data-live-search="true" style="font-family: 'sans-serif';">
                             <option value="">إختر المعدة/المرحلة</option>
-                            <option value="manually">يدوي</option>
+                            <option value="يدوي">يدوي</option>
                             @foreach ($equipments ?? '' as $equipment)
                                 <option value="{{$equipment->id}}" style="font-family: 'sans-serif';">{{$equipment->equipment_code}}</option>
                             @endforeach
@@ -138,7 +138,7 @@
                         </tbody>
                     </table>
 
-                    <button class="btn btn-primary pull-right" id="addPathBtn" style="display: none">إضافة شجرة المُنتج <i class="fa fa-plus"></i></button>
+                    <button class="btn btn-primary pull-right" id="addPathBtn" style="display: none">إضافة المسار <i class="fa fa-plus"></i></button>
 
                 </form>
             </div><!-- End Box-Item-Content -->
@@ -194,6 +194,7 @@
             routes: {
                 getEquipment: "{{ url('/get-equipment') }}",
                 addPath: "{{ url('/add-path') }}",
+                checkProductPaths: "{{ url('/check-standard-path-for-the-product') }}",
             },
             token: "{{csrf_token()}}"
         };

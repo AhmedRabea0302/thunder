@@ -51,7 +51,7 @@ $('#product_tree_picker').on('change', function(e) {
 // Calculate Total Budget For One Row
 function calculateTotalBudgetForOneRow(unit_value, quantity, wasted_amount) {
     let total = ((quantity * wasted_amount) / 100) * unit_value + (quantity * unit_value);
-    return total.toFixed(2);
+    return total.toFixed(3);
 }
 
 // Select All Product Tree Rows And Calculate Total Budget
@@ -60,6 +60,11 @@ const claculateTotalBudgetBtn = document.getElementById('claculateTotalBudgetBtn
 claculateTotalBudgetBtn.addEventListener('click', function(e) {
     e.preventDefault();
     calculateTotalBudgetForTheTree();
+
+    Toast.fire({
+        icon: 'success',
+        title: 'تم حساب التكلفة بنجاح!'
+    })
 });
 
 // Calculate Total Budget for thr tree
@@ -87,8 +92,8 @@ function calculateTotalBudgetForTheTree(e) {
     })
 
     totalBudget = +(totalBudget / requiredQuantityToGetDone);
-    totalBudgetField.value = totalBudget.toFixed(2);
-    product_unit_value.value = +(totalBudget).toFixed(2);
+    totalBudgetField.value = totalBudget.toFixed(3);
+    product_unit_value.value = +(totalBudget).toFixed(3);
     console.log(totalBudget);
 
 }
@@ -134,3 +139,16 @@ let requiredQuantityToGetDone = document.getElementById('quantity');
 requiredQuantityToGetDone.addEventListener('change', calculateTotalBudgetForTheTree);
 requiredQuantityToGetDone.addEventListener('keydown', calculateTotalBudgetForTheTree);
 calculateTotalBudgetForTheTree();
+
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})

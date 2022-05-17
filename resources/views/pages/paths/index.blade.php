@@ -19,11 +19,12 @@
                 <table class="table table-striped">
                     <thead>
                         <th>#</th>
-                        <th>كود الشجرة</th>
+                        <th>كود المسار</th>
                         <th>كود  المُنتج</th>
-                        <th>إسم المُنتج</th>
-                        <th>نوع شجرة المُنتج</th>
-                        <th>عدد المكونات</th>
+                        <th>القسم</th>
+                        <th>الكمية</th>
+                        <th>تكلفة القطعة</th>
+                        <th>مصروفات</th>
                         <th>
                             خيارات
                         </th>
@@ -34,16 +35,17 @@
                             <tr>
                                 <td style="font-family: sans-serif">{{$index + 1}}</td>
                                 <td style="font-family: sans-serif">{{ $path->path_code }}</td>
-                                <td style="font-family: sans-serif">{{ $path->getTreeMainProduct->product_code }}</td>
-                                <td>{{ substr($path->getTreeMainProduct->description, 0, 15) }}</td>
-                                <td>{{ $path->getTreeMainProduct->path_type == 0 ? 'آخرى' : 'قياسي' }}</td>
-                                <td style="font-family: sans-serif">{{ $path->prouctTreeProucts->count() }}</td>
+                                <td style="font-family: sans-serif">{{ $path->getPathMainProduct->product_code }}</td>
+                                <td>{{ $path->getPathSector->name }}</td>
+                                <td style="font-family: sans-serif">{{ $path->path_quantity }}</td>
+                                <td style="font-family: sans-serif">{{ $path->piece_total_budget }}</td>
+                                <td style="font-family: sans-serif">{{ $path->getPathExpenses->sum('expense_value') }}</td>
                                 <td>
-                                    <a href="{{ route('get-product-tree-details', ['id' => $path->id]) }}" class="btn btn-primary btn-small">
+                                    <a href="{{ route('get-path-details', ['id' => $path->id]) }}" class="btn btn-primary btn-small">
                                         تفاصيل
                                          <i class="fa fa-file"></i>
                                     </a>
-                                    <a href="{{ route('delete-product-tree', ['id' => $path->id]) }}" class="btn btn-danger btn-small">
+                                    <a disabled href="{{ route('delete-product-tree', ['id' => $path->id]) }}" class="btn btn-danger btn-small">
                                         حذف
                                          <i class="fa fa-trash"></i>
                                     </a>
@@ -52,7 +54,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- {{ $paths->render("pagination::default")}} --}}
+                {{ $paths->render("pagination::default")}}
 
 
             </div><!-- End Box-Item-Content -->

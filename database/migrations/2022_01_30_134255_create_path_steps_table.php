@@ -15,12 +15,15 @@ class CreatePathStepsTable extends Migration
     {
         Schema::create('path_steps', function (Blueprint $table) {
             $table->id();
-            $table->integer('equipment_id')->nullable();
+            $table->unsignedBigInteger('path_id');
+            $table->unsignedBigInteger('equipment_id')->nullable();
             $table->string('step_type');
             $table->integer('workers_number');
             $table->float('worker_hour_pay');
             $table->integer('production_time_rate');
             $table->float('step_total_budget');
+
+            $table->foreign('path_id')->references('id')->on('paths')->onDelete('cascade');
 
             $table->timestamps();
         });

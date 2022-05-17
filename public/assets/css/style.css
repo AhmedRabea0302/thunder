@@ -1605,3 +1605,79 @@ table .form-control {
     font-family: sans-serif;
     background-color: #f80;
 }
+
+.swal2-html-container {
+    font-family: 'Swissra-Bold';
+    font-size: 1.3em;
+}
+
+
+/* ================ CALCULATE STANDARD COST PAGE ================= */
+
+.calculate-standard-cost {
+    background-color: #f12;
+    min-height: 40px;
+    margin: 30px 0;
+}
+
+.calculate-standard-cost .tree-paster {
+    background: #f89842;
+    min-height: 40px;
+}
+
+.calculate-standard-cost .path-paster {
+    background-color: #012d2b;
+    min-height: 40px;
+}
+
+.calculate-standard-cost .path-paster,
+.calculate-standard-cost .tree-paster {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    color: #fff;
+    font-weight: bold;
+}
+
+.trees ul.trees-list {}
+
+.trees ul.trees-list li,
+.paths ul.paths-list li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    background-color: #f89842;
+    cursor: pointer;
+    transition: 0.3s ease-in-out all;
+    color: #fff;
+    font-weight: bold;
+}
+
+.paths ul.paths-list li {
+    background-color: #012d2b;
+    border: 1px solid #f89842;
+}
+
+.paths ul.paths-list li:hover {
+    background-color: #f89842;
+}
+
+.trees ul.trees-list li:hover {
+    background-color: #012d2b;
+}
+
+.trees ul.trees-list li .tree-code,
+.paths ul.paths-list li .path-code,
+.trees ul.trees-list li .tree-budget,
+.paths ul.paths-list li .path-budget,
+.path-time span {
+    font-family: sans-serif;
+}
+
+.over {
+    background-color: #0a5652 !important
+}

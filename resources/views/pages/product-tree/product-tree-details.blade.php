@@ -39,7 +39,7 @@
         @endif
         <div class="box-item">
             <div class="box-item-head">
-                <h3 class="title">تفاصيل شجرة المنتج - <span class="badge">{{ $product_tree->product_tree_code }}</span></h3>
+                <h3 class="title">تفاصيل شجرة المنتج - <span class="badge" style="font-family: sans-serif; background: #f89842;">{{ $product_tree->product_tree_code }}</span></h3>
                 <i class="fa fa-angle-down"></i>
             </div><!-- End Box-Item-Head -->
             <div class="box-item-content">
@@ -73,7 +73,10 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">نوع شجرة المُنتج</label>
-                                <input type="text" value="{{ $product_tree->product_tree_type == "1" ? 'قياسي' : 'آخرى'}}" id="product_tree_code" name="product_tree_code" class="form-control" readonly style="font-family: sans-serif">
+                                <select id="product_tree_type" name="product_tree_type" class="form-control">
+                                    <option {{ $product_tree->product_tree_type == "1" ? 'selected' : ''}} value="1">آخرى</option>
+                                    <option {{ $product_tree->product_tree_type == "0" ? 'selected' : ''}} value="0" class="standard-tree">قياسي</option>
+                                </select>
                             </div>
                         </div>
 

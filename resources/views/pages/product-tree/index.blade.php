@@ -36,7 +36,7 @@
                                 <td style="font-family: sans-serif">{{ $product_tree->product_tree_code }}</td>
                                 <td style="font-family: sans-serif">{{ $product_tree->getTreeMainProduct->product_code }}</td>
                                 <td>{{ substr($product_tree->getTreeMainProduct->description, 0, 15) }}</td>
-                                <td>{{ $product_tree->getTreeMainProduct->product_tree_type == 0 ? 'آخرى' : 'قياسي' }}</td>
+                                <td>{{ $product_tree->getTreeMainProduct->product_tree_type == 0 ? 'قياسي' : 'آخرى' }}</td>
                                 <td style="font-family: sans-serif">{{ $product_tree->prouctTreeProucts->count() }}</td>
                                 <td>
                                     <a href="{{ route('get-product-tree-details', ['id' => $product_tree->id]) }}" class="btn btn-primary btn-small">
