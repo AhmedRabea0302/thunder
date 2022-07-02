@@ -7,6 +7,9 @@ use App\Models\Sector;
 use App\Models\Stock;
 use App\Models\Product;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 class DailyReportController extends Controller
 {
     public function index() {
@@ -49,5 +52,35 @@ class DailyReportController extends Controller
 
     public function addDailyReport(Request $request) {
 
+        $repoertObj = $request->repoertObj;
+        $allReportRowsData = $request->allReportRowsData;
+
+        DB::transaction(function () use ($repoertObj, $allReportRowsData) {
+
+            $reportId = DB::table('daily_reports')->insertGetId([
+                'sector_id' => $repoertObj['sector'],
+                'healthy_stock_delivery_id' => $repoertObj['stock'],
+                'corrupt_stock_delivery_id' => $repoertObj['tainted_stock'],
+                'shift' => $repoertObj['period'],
+                'date' => $repoertObj['date'],
+            ]);
+
+            // Insert Report Products
+            foreach ($allReportRowsData as $row) {
+                DB::table('daily_report_products')->insert([
+                    'daily_report_id' => $reportId,
+                    'product_id' => $row['product_id'],
+                    'quantity' => $row['product_quantity'],
+                    'corrupted_quantity' => $row['tainted_product_quantity'],
+                    'corrupted_unit' => $row['tainted_unit'],
+                    'unit_value' => $row['unit_value'],
+                    'total' => $row['total'],
+                ]);
+                
+            }
+
+        });
+        Session::flash('message', 'تم إضافة التقرير اليومي بنجاح');
+        return response()->json(['code' => '200']);
     }
 }

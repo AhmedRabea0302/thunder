@@ -15,6 +15,11 @@ class CreateDailyReportsTable extends Migration
     {
         Schema::create('daily_reports', function (Blueprint $table) {
             $table->id();
+            $table->integer('sector_id');
+            $table->integer('healthy_stock_delivery_id');
+            $table->integer('corrupt_stock_delivery_id');
+            $table->string('shift');
+            $table->date('date');
             $table->timestamps();
         });
     }

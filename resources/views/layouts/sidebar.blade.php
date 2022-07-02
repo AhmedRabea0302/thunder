@@ -79,19 +79,34 @@
             </ul><!--End Level-one-tree-->
         </li>
 
+        <li class="treeview" @if(Request::route()->getName() == 'products-report' || Request::route()->getName() == 'product-tree-report' || Request::route()->getName() == 'path-report') class="active" @endif>
+            <a href="">
+                <i class="fa fa-bell"></i>
+                <span>التقارير</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="{{route('products-report')}}"  @if(Request::route()->getName() == 'products-report') class="active" @endif>
+                        <span>المنتجات اليومية</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('product-tree-report')}}"  @if(Request::route()->getName() == 'product-tree-report') class="active" @endif>
+                        <span>شجرة منتج</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('path-report')}}"  @if(Request::route()->getName() == 'path-report') class="active" @endif>
+                        <span>مسار إنتاج</span>
+                    </a>
+                </li>
+            </ul><!--End Level-one-tree-->
+        </li>
+
+
         {{--
-        <li>
-            <a href="contact-us.html">
-                <i class="fa fa-envelope-open"></i>
-                <span>تواصل معنا</span>
-            </a>
-        </li>
-        <li>
-            <a href="subscription.html">
-                <i class="fa fa-check-square-o"></i>
-                <span>الإشتراكات</span>
-            </a>
-        </li>
+
         <li>
             <a href="notifications.html">
                 <i class="fa fa-bell"></i>

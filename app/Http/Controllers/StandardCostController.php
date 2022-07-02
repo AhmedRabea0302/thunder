@@ -6,6 +6,8 @@ use App\Models\Path;
 use App\Models\ProductTree;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class StandardCostController extends Controller
 {
@@ -23,6 +25,16 @@ class StandardCostController extends Controller
             $trees = ProductTree::where('product_id', $prodcut_id)->get();
         }
         return response()->json(['paths' => $paths, 'trees' => $trees]);
+    }
+
+    public function updateProductStandardCost(Request $request) {
+        $prodcut = Product::find($request->product_id);
+        $prodcut->unit_value = $request->price;
+        
+        $prodcut->save();
+
+        Session::flash('message', 'تم حساب التكلفة المعيارية للمنتج بنجاح');
+        return response()->json(['code' => '200']);
     }
 
 }

@@ -48,7 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">تاريخ الإنتاج</label>
-                                <input type="date" name="date" id="date" class="form-control" style="font-family: sans-serif">
+                                <input type="date" required name="date" id="date" class="form-control" style="font-family: sans-serif">
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
                                 <th>قيمة الوحدة السليمة</th>
                                 <th>الإجمالي</th>
                             </thead>
-                            <tbody>
+                            <tbody class="daily-report-products">
 
                             </tbody>
                         </table>
@@ -135,6 +135,7 @@
     var config = {
         routes: {
             getProduct: "{{ url('/get-product-daily-report') }}",
+            addDailyReport: "{{ url('/add-daily-report') }}",
         },
         token: "{{csrf_token()}}"
     };

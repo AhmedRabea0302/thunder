@@ -216,7 +216,7 @@ function calculateTotalBudgetForThePath(e) {
 
         totalBudget += +totalForRow.value;
     })
-
+    debugger
     totalBudget = +(totalBudget / requiredQuantityToGetDone);
     totalBudgetField.value = totalBudget.toFixed(3);
 

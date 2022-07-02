@@ -22,6 +22,13 @@
     </style>
     <section>
         <div class="box-item">
+
+            @if(Session()->has('message'))
+                <div class="alert alert-success">
+                    <p>{{ Session()->get('message') }}</p>
+                </div>
+            @endif
+            
             <div class="box-item-head">
                 <h3 class="title"> التكلُفة المعيارية</h3>
             </div><!-- End Box-Item-Head -->
@@ -64,6 +71,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="trees">
+                                
                                 <ul class="list-unstyled trees-list">
 
                                 </ul>
@@ -79,8 +87,16 @@
                         </div>
                     </div>
                 </div>
+                <br><br>
 
-                <br><br><br><br><br><br><br>
+                <div class="row">
+                   <div class="col-md-12">
+                    <div class="form-group">
+                            <input type="submit" class="btn btn-info change-product-price" value="تحديد السعر">
+                        </div>
+                   </div>
+                </div>
+                <br><br><br><br>
             </div><!-- End Box-Item-Content -->
         </div><!-- End Box-Item -->
     </section><!--End Section-->
@@ -93,6 +109,7 @@
     var config = {
         routes: {
             getProductPathsAndTrees: "{{ url('/get-product-paths-and-trees') }}",
+            updateProductStandardCost: "{{ url('/update-product-standard-cost') }}"
         },
         token: "{{csrf_token()}}"
     };

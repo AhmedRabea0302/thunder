@@ -1,9 +1,12 @@
 const product_picker = document.getElementById('product_picker');
 const treesContainer = document.querySelector('.trees .trees-list');
 const pathsContainer = document.querySelector('.paths .paths-list');
+const changePriceButton = document.querySelector('.change-product-price');
+let productId;
 
 $('#product_picker').on('change', function(e) {
-    let productId = e.target.value;
+    productId = e.target.value;
+    changePriceButton.style.visibility = 'visible';
 
     if (productId) {
         $.ajax({
@@ -18,17 +21,19 @@ $('#product_picker').on('change', function(e) {
             treesContainer.innerHTML = '';
             pathsContainer.innerHTML = '';
 
+            treesContainer.innerHTML += '<li>شجر المنتج</li>';
             data.trees.forEach((tree) => {
                 let treeRow = `
                         <li draggable="true" class="draggable">
                             <span class="tree-code">${tree.product_tree_code}</span>
-                            <span class="tree-type">${tree.product_tree_type == 1 ? 'قياسي' : 'آخرى'}</span>
+                            <span class="tree-type">${tree.product_tree_type == 1 ? 'آخرى' : 'قياسي' }</span>
                             <span class="tree-budget">${tree.total_budget}</span>
                         </li>
                 `;
                 treesContainer.innerHTML += (treeRow);
             });
 
+            pathsContainer.innerHTML += '<li>المسارات</li>';
             data.paths.forEach((path) => {
                 let totalTime = 0;
                 pathTotalTime = path.get_path_steps.forEach(step => {
@@ -37,7 +42,7 @@ $('#product_picker').on('change', function(e) {
                 let treeRow = `
                         <li draggable="true" class="draggable">
                             <span class="path-code">${path.path_code}</span>
-                            <span class="path-type">${path.path_type == 1 ? 'قياسي' : 'آخرى'}</span>
+                            <span class="path-type">${path.path_type == 1 ? 'آخرى' : 'قياسي' }</span>
                             <span class="path-budget">${path.piece_total_budget}</span>
                             <span class="path-time"><span>${totalTime}</span> دقيقة</span>
                         </li>
@@ -130,6 +135,29 @@ function calculateTotalStandardCost() {
         })
     }
 }
+
+// Change The Product Price 
+$(changePriceButton).on('click', function() {
+    let price = document.querySelector('#standardCost').value;
+    let product_id = productId;
+
+    $.ajax({
+        url: config.routes.updateProductStandardCost,
+        type: 'POST',
+        data: {
+            price,
+            product_id,
+            _token: config.token
+        }
+    }).
+    done((data) => {
+        window.location.href = 'standard-cost';
+    })
+    .fail((error) => {
+
+    });
+    
+});
 
 
 const Toast = Swal.mixin({

@@ -1681,3 +1681,18 @@ table .form-control {
 .over {
     background-color: #0a5652 !important
 }
+
+.change-product-price {
+    float: left;
+    background-color: #f89842;
+    border: 1px solid #f89842;
+    visibility: hidden;
+}
+
+.change-product-price:hover {
+    background-color: #0a5652 !important
+}
+
+.change-product-price:focus, .change-product-price:active {
+    background-color: #0a5652 !important
+}

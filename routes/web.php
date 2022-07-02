@@ -11,6 +11,7 @@ use App\Http\Controllers\PathController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StandardCostController;
 use App\Http\Controllers\DailyReportController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,13 +83,22 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/update-stock', [StockController::class, 'updateStock'])->name('update-Stock');
     Route::get('/delete-stock', [StockController::class, 'deleteStock'])->name('delete-Stock');
 
-    // PRICES ROUTES
+    // STANDARD COST ROUTES
     Route::get('/standard-cost', [StandardCostController::class, 'index'])->name('standard-cost');
     Route::post('/get-product-paths-and-trees', [StandardCostController::class, 'getProductPathsAndTrees']);
+    Route::post('/update-product-standard-cost', [StandardCostController::class, 'updateProductStandardCost']);
 
     // DAILY REPORT
     Route::get('/daily-report', [DailyReportController::class, 'index'])->name('daily-report');
     Route::get('/get-product-daily-report', [DailyReportController::class, 'getProduct'])->name('daily-report-get-product');
     Route::post('/add-daily-report', [DailyReportController::class, 'addDailyReport'])->name('add-daily-report');
+
+    // Actuall Pdf REPORTS 
+    Route::get('/products-report', [ReportController::class, 'productsOfDay'])->name('products-report');
+    Route::post('/products-report', [ReportController::class, 'printProductsOfDay'])->name('print-products-report');
+    Route::get('/product-tree-report', [ReportController::class, 'productsOfTree'])->name('product-tree-report');
+    Route::post('/product-tree-report', [ReportController::class, 'PrintProductsOfTree'])->name('print-product-tree-report');
+    Route::get('/path-report', [ReportController::class, 'pathSteps'])->name('path-report');
+    Route::post('/print-path', [ReportController::class, 'printPathDetails'])->name('print-path');
 
 });
