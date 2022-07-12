@@ -19,11 +19,19 @@ class ReportController extends Controller
     }
 
     public function printProductsOfDay(Request $request) {
-        $daily_report = DailyReport::where('date', $request->date)->first();
-        $daily_report_products = DailyReportProduct::where('daily_report_id', $daily_report->id)->get();
-
-        dd($daily_report, $daily_report_products);
-        return $request->date;
+        $daily_reports = DailyReport::where('date', $request->date)->with('getDailyReportProducts')->get();
+        // $daily_report_products = [];
+        // if($daily_reports) {
+        //     foreach($daily_reports as $report) {
+                
+        //         array_push($daily_report_products, DailyReportProduct::where('daily_report_id', $report->id)->get());
+        //     }  
+        // }
+        
+        return view('pages.reports.print_daily_report', [
+            'daily_reports' => $daily_reports,
+            'date' => $request->date
+        ]); 
     }
 
     public function productsOfTree() {
