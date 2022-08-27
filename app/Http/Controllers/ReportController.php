@@ -82,7 +82,7 @@ class ReportController extends Controller
                     FROM 
                         tree_products
                     WHERE 
-                        created_at BETWEEN CAST(? AND CAST(? AS date)
+                        created_at BETWEEN CAST(? AS date) AND CAST(? AS date)
                     GROUP BY
                         product_id
                 '
