@@ -92,7 +92,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="">كود المُنتج</label>
-                        <input type="text" readonly name="product_code" class="form-control product_code_modal" style="font-family: 'sans-serif'">
+                        <input type="text" name="product_code" class="form-control product_code_modal" style="font-family: 'sans-serif'">
+                        <small>لابد أن يكون أطول من 8 حروف وأقل من 16 حرف</small>
                     </div>
                   </div>
 

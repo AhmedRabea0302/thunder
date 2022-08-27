@@ -89,8 +89,8 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                          <label for="">كود المُعدة</label>
-                          <input type="text" disabled name="equipment_codeadd" class="form-control" style="font-family: 'sans-serif'">
+                            <small> كود المعدة أطول من 8 حروف وأقل من 16 حرف</small>
+                            <input type="text" name="equipment_codeadd" class="form-control" style="font-family: 'sans-serif'">
                       </div>
                     </div>
 

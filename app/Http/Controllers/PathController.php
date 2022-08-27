@@ -13,7 +13,7 @@ use App\Models\PathExpense;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 
 class PathController extends Controller
 {
@@ -35,63 +35,81 @@ class PathController extends Controller
         $pathSteps = $request->pathSteps;
         $pathExpenses = $request->pathExpenses;
 
-        DB::transaction(function () use ($pathData, $pathSteps, $pathExpenses) {
 
-            $pathId = DB::table('paths')->insertGetId([
-                'sector_id' => $pathData['pathSector'],
-                'product_id' => $pathData['productPicker'],
-                'path_code' => $pathData['pathCode'],
-                'path_type' => $pathData['pathType'],
-                'path_quantity' => $pathData['quantity'],
-                'piece_total_budget' => $pathData['totalBudget'],
-            ]);
+        $rules = [
+            'pathData.path_code' => 'required|min:8|max:16|unique:paths',
+        ];
 
-            // Inser Path Steps
-            foreach ($pathSteps as $step) {
-                $type = $step['stepType'];
-                if($type == 'يدوي') {
-                    DB::table('path_steps')->insert([
-                        'path_id' => $pathId,
-                        'equipment_id' => $step['equipmentId'],
-                        'step_type' => $step['stepType'],
-                        'workers_number' => $step['workersNumber'],
-                        'worker_hour_pay' => $step['workerPay'],
-                        'production_time_rate' => $step['productionRate'],
-                        'step_total_budget' => $step['stepTotalBudget'],
-                    ]);
-                } else {
-                    $equipmentId = (int)$step['equipmentId'];
-                    $equipment = Equipment::find($equipmentId);
+        $messages = [
+            'pathData.path_code.required' => 'من فضلك أدخل كود المسار',
+            'pathData.path_code.min' => 'كود المسار لابد أن يكون أطول من 8 أحرف',
+            'pathData.path_code.max' => 'كود المسار لابد أن يكون أقل من 16 حرف',
+            'pathData.path_code.unique' => 'تم إضافة كود المسار من قبل',
+        ];
 
-                    if($equipment) {
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if($validator->fails()) {
+            dd($validator->errors());
+            return redirect()->back()->with(['errors' => $validator->errors()]);
+        } else {
+            DB::transaction(function () use ($pathData, $pathSteps, $pathExpenses) {
+
+                $pathId = DB::table('paths')->insertGetId([
+                    'sector_id' => $pathData['pathSector'],
+                    'product_id' => $pathData['productPicker'],
+                    'path_code' => $pathData['pathCode'],
+                    'path_type' => $pathData['pathType'],
+                    'path_quantity' => $pathData['quantity'],
+                    'piece_total_budget' => $pathData['totalBudget'],
+                ]);
+    
+                // Inser Path Steps
+                foreach ($pathSteps as $step) {
+                    $type = $step['stepType'];
+                    if($type == 'يدوي') {
                         DB::table('path_steps')->insert([
                             'path_id' => $pathId,
-                            'equipment_id' => $equipment->id,
+                            'equipment_id' => $step['equipmentId'],
                             'step_type' => $step['stepType'],
-                            'workers_number' => $equipment->workers_number,
-                            'worker_hour_pay' => $equipment->worker_hour_pay,
+                            'workers_number' => $step['workersNumber'],
+                            'worker_hour_pay' => $step['workerPay'],
                             'production_time_rate' => $step['productionRate'],
                             'step_total_budget' => $step['stepTotalBudget'],
                         ]);
+                    } else {
+                        $equipmentId = (int)$step['equipmentId'];
+                        $equipment = Equipment::find($equipmentId);
+    
+                        if($equipment) {
+                            DB::table('path_steps')->insert([
+                                'path_id' => $pathId,
+                                'equipment_id' => $equipment->id,
+                                'step_type' => $step['stepType'],
+                                'workers_number' => $equipment->workers_number,
+                                'worker_hour_pay' => $equipment->worker_hour_pay,
+                                'production_time_rate' => $step['productionRate'],
+                                'step_total_budget' => $step['stepTotalBudget'],
+                            ]);
+                        }
                     }
                 }
-            }
-
-            if($pathExpenses) {
-                // Insert Expenses
-                foreach ($pathExpenses as $expense) {
-                    DB::table('path_expenses')->insert([
-                        'path_id' => $pathId,
-                        'equipment_id' => $expense['expenseId'],
-                        'expense_type' => $expense['expenseType'],
-                        'expense_value' => $expense['expenseValue'],
-                    ]);
+    
+                if($pathExpenses) {
+                    // Insert Expenses
+                    foreach ($pathExpenses as $expense) {
+                        DB::table('path_expenses')->insert([
+                            'path_id' => $pathId,
+                            'equipment_id' => $expense['expenseId'],
+                            'expense_type' => $expense['expenseType'],
+                            'expense_value' => $expense['expenseValue'],
+                        ]);
+                    }
                 }
-            }
-
-        });
-        Session::flash('message', 'تم إضافة المسار بنجاح');
-        return response()->json(['code' => '200']);
+    
+            });
+            Session::flash('message', 'تم إضافة المسار بنجاح');
+            return response()->json(['code' => '200']);
+        }
 
     }
 

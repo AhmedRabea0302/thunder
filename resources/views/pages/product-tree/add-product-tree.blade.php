@@ -30,6 +30,13 @@
         }
     </style>
     <section>
+        @if(Session()->has('errors'))
+            <ul class="list-unstyled">
+                @foreach ($errors->all() as $error)
+                    <li class="alert alert-danger">{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
         @if(Session()->has('message'))
             <div class="alert alert-success">
                 <p>{{ Session()->get('message') }}</p>
@@ -67,7 +74,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">كود شجرة المُنتج</label>
-                                <input type="text" id="product_tree_code" name="product_tree_code" class="form-control" readonly style="font-family: sans-serif">
+                                <input type="text" id="product_tree_code" name="product_tree_code" class="form-control" style="font-family: sans-serif">
+                                <small>لابد أن يكون أطول من 8 حروف وأقل من 16 حرف</small>
                             </div>
                         </div>
 

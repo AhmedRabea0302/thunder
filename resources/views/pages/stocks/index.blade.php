@@ -91,7 +91,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                         <label for="">كود المخزن</label>
-                        <input type="text" readonly name="stock_code_modal" class="form-control stock_code_modal" style="border: 2px solid #ccc; font-family: sans-serif">
+                        <input type="text" name="stock_code_modal" class="form-control stock_code_modal" style="border: 2px solid #ccc; font-family: sans-serif">
                     </div>
                   </div>
 

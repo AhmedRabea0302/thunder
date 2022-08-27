@@ -27,12 +27,17 @@ class ProductController extends Controller
         $product = new Product();
 
         $rules = [
+            'product_code' => 'required|unique:products|min:8|max:16',
             'product_type' => 'required',
             'unit' => 'required',
             'description' => 'required',
         ];
 
         $messages = [
+            'product_code.required' => 'من فضلك أدخل كود المُنتج',
+            'product_code.unique' => 'لا يمكن إضافة هذا الكود، تم إضافته من قبل',
+            'product_code.min' => 'كود المنتج يجب أن يكون أكثر من 8 حروف وأرقام',
+            'product_code.max' => 'كود المنتج لايمكن أن يتعدى 16 حرف',
             'product_type.required' => 'من فضلك إختر نوع المُنتج',
             'unit.required' => 'من فضلك أدخل الوحدة',
             'description.required' => ' من فضلك أدخل وصف المُنتج',

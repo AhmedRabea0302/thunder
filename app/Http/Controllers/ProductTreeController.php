@@ -8,6 +8,7 @@ use App\Models\ProductTree;
 use App\Models\TreeProduct;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductTreeController extends Controller
 {
@@ -35,47 +36,63 @@ class ProductTreeController extends Controller
 
     public function addProductTree(Request $request) {
 
-        DB::transaction(function ($transaction) use ($request) {
+        $rules = [
+            'product_tree_code' => 'required|min:8|max:16',
+        ];
 
-            // Product Tree Attributes
-            $product_id = $request->product_tree_id;
-            $product_tree_code = $request->product_tree_code;
-            $product_tree_type = $request->product_tree_type;
-            $quantity = (double)$request->quantity;
-            $total_budget = (double)$request->total_budget;
-            $date = date('Y-m-d H:i:s');
-            // Create Product Tree
-            $product_tree_id = DB::table('product_trees')->insertGetId([
-                'product_id' => $product_id,
-                'product_tree_code' => $product_tree_code,
-                'product_tree_type' => $product_tree_type,
-                'quantity' => $quantity,
-                'total_budget' => $total_budget,
-                'created_at' => $date ,
-                'updated_at' => $date
-            ]);
+        $messages = [
+            'product_tree_code.required' => 'من فضلك أدخل كود شجرة المُنتج',
+            'product_tree_code.min' => 'كود شجرة المنتج لابد أن يكون أطول من 8 أحرف',
+            'product_tree_code.max' => 'كود شجرة المٌنتج لابد أن يكون أقل من 16 حرف',
+        ];
 
-            // Create Tree Products
-            $tree_prouducts_number = count($request->product_id);
-             for($i = 0; $i < $tree_prouducts_number; $i++) {
-                DB::table('tree_products')->insert([
-                    'product_tree_id' => $product_tree_id,
-                    'product_id' => (double)$request->product_id[$i],
-                    'quantity' => (double)$request->product_quantity[$i],
-                    'wasted_quantity' => (double)$request->wasted_quantity[$i],
-                    'total_quantity' => (double)$request->total_quantity[$i],
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if($validator->fails()) {
+            return redirect()->back()->with(['errors' => $validator->errors()]);
+        } else {
+            DB::transaction(function ($transaction) use ($request) {
+
+                // Product Tree Attributes
+                $product_id = $request->product_tree_id;
+                $product_tree_code = $request->product_tree_code;
+                $product_tree_type = $request->product_tree_type;
+                $quantity = (double)$request->quantity;
+                $total_budget = (double)$request->total_budget;
+                $date = date('Y-m-d H:i:s');
+                // Create Product Tree
+                $product_tree_id = DB::table('product_trees')->insertGetId([
+                    'product_id' => $product_id,
+                    'product_tree_code' => $product_tree_code,
+                    'product_tree_type' => $product_tree_type,
+                    'quantity' => $quantity,
+                    'total_budget' => $total_budget,
                     'created_at' => $date ,
                     'updated_at' => $date
                 ]);
-            }
-
-            DB::table('products')->where('id', $request->product_tree_id)
-            ->update(['unit_value' => $total_budget]);
-
-        });
-        Session::flash('message', 'تم إضافة شجرة المُنتج بنجاح!');
-
-        return redirect()->route('product-tree');
+    
+                // Create Tree Products
+                $tree_prouducts_number = count($request->product_id);
+                 for($i = 0; $i < $tree_prouducts_number; $i++) {
+                    DB::table('tree_products')->insert([
+                        'product_tree_id' => $product_tree_id,
+                        'product_id' => (double)$request->product_id[$i],
+                        'quantity' => (double)$request->product_quantity[$i],
+                        'wasted_quantity' => (double)$request->wasted_quantity[$i],
+                        'total_quantity' => (double)$request->total_quantity[$i],
+                        'created_at' => $date ,
+                        'updated_at' => $date
+                    ]);
+                }
+    
+                DB::table('products')->where('id', $request->product_tree_id)
+                ->update(['unit_value' => $total_budget]);
+    
+            });
+            Session::flash('message', 'تم إضافة شجرة المُنتج بنجاح!');
+    
+            return redirect()->route('product-tree');
+        }
+        
     }
 
     public function getProductTreeDetails($id) {
