@@ -92,6 +92,13 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label for="">وحدة المنتج</label>
+                                <input type="text" id="product_unit" name="product_unit" class="form-control" readonly style="font-family: sans-serif">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label for="">الكمية</label>
                                 <input type="number" min="1" id="quantity" name="quantity" class="form-control" style="font-family: 'sans-serif';" required>
                             </div>
@@ -115,7 +122,7 @@
                         </select>
 
                         <div style="display: flex">
-                            <button class="btn btn-primary pull-right" id="claculateTotalBudgetBtn">إحسب قيمة التشغيل للقطعة</button>
+                            <button class="btn btn-primary pull-right" id="claculateTotalBudgetBtn">إحسب قيمة التشغيل للوحدة</button>
                             <input type="number" readonly id="totalBudgetField" name="total_budget" class="form-control pull-right" style="font-family: sans-serif;">
                             <br>
                         </div>
@@ -130,7 +137,7 @@
                             <th>أجر العامل/س</th>
                             <th>معدل الإنتاج</th>
                             <th>المصروفات</th>
-                            <th>التشغيل/ساعة</th>
+                            <th>التشغيل</th>
                             <th></th>
                         </thead>
                         <tbody style="font-size: 12px;">
@@ -195,6 +202,7 @@
                 getEquipment: "{{ url('/get-equipment') }}",
                 addPath: "{{ url('/add-path') }}",
                 checkProductPaths: "{{ url('/check-standard-path-for-the-product') }}",
+                getProduct: "{{ url('/get-product') }}"
             },
             token: "{{csrf_token()}}"
         };

@@ -64,7 +64,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">مخن تسليم المُنتج السليم</label>
+                                <label for="">مخزن تسليم المُنتج السليم</label>
                                 <select name="stock" id="stock" class="form-control">
                                     @foreach ($stocks as $stock)
                                         <option value="{{ $stock->id }}">{{ $stock->stock_name }}</option>
@@ -75,7 +75,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">مخن تسليم المُنتج التالف</label>
+                                <label for="">مخزن تسليم المُنتج التالف</label>
                                 <select name="tainted_stock" id="tainted_stock" class="form-control">
                                     @foreach ($stocks as $stock)
                                         <option value="{{ $stock->id }}">{{ $stock->stock_name }}</option>

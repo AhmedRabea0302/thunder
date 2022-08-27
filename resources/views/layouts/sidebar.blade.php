@@ -101,6 +101,12 @@
                         <span>مسار إنتاج</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('materilas-report')}}"  @if(Request::route()->getName() == 'path-report') class="active" @endif>
+                        <span>الخامات المستخدمة</span>
+                    </a>
+                </li>
             </ul><!--End Level-one-tree-->
         </li>
 

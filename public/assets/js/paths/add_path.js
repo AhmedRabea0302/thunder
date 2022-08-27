@@ -29,6 +29,7 @@ $('#product_picker').on('change', function(e) {
             }
         }).
         done((data) => {
+                
                 // Disable The Standard Option if the there is a standard path for the product
                 if (data == true) {
                     document.querySelector('.standard-path').disabled = true;
@@ -43,7 +44,23 @@ $('#product_picker').on('change', function(e) {
                     document.querySelector('.other-path').innerText = 'يجب إضافة مسار قياسي لهذا المُنتج أولاً';
                 }
             })
-            .fail(error => {});
+        .fail(error => {});
+        
+        $.ajax({
+            url: config.routes.getProduct,
+            type: 'GET',
+            data: {
+                id: product_id,
+                _token: config.token
+            }
+        })
+        .done(data => {
+            // Add The product Unit
+            document.querySelector('#product_unit').value = data.unit;
+        })
+        .fail();
+    } else {
+        document.querySelector('#product_unit').value = '';
     }
 })
 

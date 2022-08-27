@@ -11,6 +11,7 @@ use App\Models\TreeProduct;
 use App\Models\Path;
 use App\Models\PathStep;
 use App\Models\PathExpense;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -62,4 +63,49 @@ class ReportController extends Controller
         
         return view('pages.reports.print_paths', ['path' => $path, 'path_steps' => $path_steps, 'path_expenses' => $path_expenses]);
     }
+
+    public function materialsDetails() {
+        return view('pages.reports.materials');
+    }
+    public function printMaterialsDetails(Request $request) {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        
+        $materials = collect(
+            DB::select(
+                '
+                    SELECT 
+                        product_id,
+                        sum(wasted_quantity) AS total_wasted_quantiy,
+                        sum(quantity) AS total_quantity,
+                        sum(total_quantity) AS total_cost
+                    FROM 
+                        tree_products
+                    WHERE 
+                        created_at BETWEEN CAST(? AND CAST(? AS date)
+                    GROUP BY
+                        product_id
+                '
+                , 
+                [$start_date, $end_date]
+            )
+        );
+        
+        $mats = $materials->toArray();
+        foreach($mats as $mat) {
+            $product = Product::find($mat->product_id);
+            $mat->product_unit = $product->unit;
+            $mat->product_code = $product->product_code;
+            $mat->product_name = $product->description;
+        }
+
+        return view('pages.reports.print_materials', [
+                'mats' => collect($mats), 
+                'start_date' => $start_date, 
+                'end_date' => $end_date
+            ]
+        );
+    }
 }
+
+

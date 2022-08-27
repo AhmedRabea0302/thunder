@@ -77,14 +77,16 @@ class PathController extends Controller
                 }
             }
 
-            // Insert Expenses
-            foreach ($pathExpenses as $expense) {
-                DB::table('path_expenses')->insert([
-                    'path_id' => $pathId,
-                    'equipment_id' => $expense['expenseId'],
-                    'expense_type' => $expense['expenseType'],
-                    'expense_value' => $expense['expenseValue'],
-                ]);
+            if($pathExpenses) {
+                // Insert Expenses
+                foreach ($pathExpenses as $expense) {
+                    DB::table('path_expenses')->insert([
+                        'path_id' => $pathId,
+                        'equipment_id' => $expense['expenseId'],
+                        'expense_type' => $expense['expenseType'],
+                        'expense_value' => $expense['expenseValue'],
+                    ]);
+                }
             }
 
         });

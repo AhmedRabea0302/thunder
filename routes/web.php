@@ -100,5 +100,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/product-tree-report', [ReportController::class, 'PrintProductsOfTree'])->name('print-product-tree-report');
     Route::get('/path-report', [ReportController::class, 'pathSteps'])->name('path-report');
     Route::post('/print-path', [ReportController::class, 'printPathDetails'])->name('print-path');
+    Route::get('/materilas-report', [ReportController::class, 'materialsDetails'])->name('materilas-report');
+    Route::post('/materilas-report', [ReportController::class, 'printMaterialsDetails'])->name('print-materilas-report');
 
 });
